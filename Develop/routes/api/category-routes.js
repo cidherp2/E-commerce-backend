@@ -48,10 +48,31 @@ res.send("There was an error" + err);
 
 router.put('/:id', async  (req, res) => {
   // update a category by its `id` value
+  try {
+    const categoryUpdate = Category.update({
+      category_name:req.body.category_name},{
+      where: {
+        id: req.params.id,
+      }
+    })
+    res.send('The category has been updated \n ' +categoryUpdate)
+  } catch (err) {
+    res.send("There was an error with the request " + err );
+  }
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async  (req, res) => {
   // delete a category by its `id` value
+  try {
+    const deleteCategory = Category.destroy({
+      where:{
+        id: req.params.id
+      }
+    })
+    res.send("Category has been deleted")
+  } catch (err) {
+    res.send("an error has ocurred with  the request " + err)
+  }
 });
 
 module.exports = router;
